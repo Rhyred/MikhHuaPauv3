@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MikHuaPau</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap");
+
+        :root {
+            /* Palet warna baru: Gradasi Hitam-Biru */
+            --primary-dark: #1a1a2e;
+            /* Biru sangat gelap, mendekati hitam */
+            --secondary-dark: #283046;
+            /* Biru gelap keabu-abuan */
+            --accent-blue: #007bff;
+            /* Biru standar untuk aksen */
+            --accent-cyan: #00f2fe;
+            /* Cyan terang untuk highlight */
+            --text-light: #e0e7ff;
+            /* Teks terang untuk latar gelap */
+            --text-muted: #a0aec0;
+            /* Teks abu-abu untuk deskripsi */
+            --border-dark: rgba(255,
+                    255,
+                    255,
+                    0.1);
+            /* Border terang pada latar gelap */
+            --shadow-dark: rgba(0, 0, 0, 0.4);
+            /* Shadow gelap yang mendalam */
+            --shadow-subtle: rgba(0, 0, 0, 0.2);
+            /* Shadow gelap yang lebih halus */
+            --glass-effect: rgba(255,
+                    255,
+                    255,
+                    0.05);
+            /* Efek kaca transparan (minimal) */
+            --border-radius-base: 8px;
+            --border-radius-large: 25px;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            /* Teks tubuh pakai Inter */
+            min-height: 100vh;
+            color: var(--text-light);
+            overflow-x: hidden;
+            background: linear-gradient(135deg,
+                    #000000 0%,
+                    var(--primary-dark) 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header Styles */
+        .main-header {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-dark);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: transform 0.3s ease-out, background-color 0.3s ease-out;
+            box-shadow: 0 2px 10px var(--shadow-dark);
+        }
+
+        .main-header.header-hidden {
+            transform: translateY(-100%);
+        }
+
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-family: "Poppins", sans-serif;
+            /* Logo pakai Poppins */
+            font-size: 1.75rem;
+            font-weight: 800;
+            /* Lebih tebal */
+            color: var(--accent-cyan);
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .logo:hover {
+            color: var(--accent-blue);
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-family: "Inter", sans-serif;
+            /* Navigasi pakai Inter */
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius-base);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 80%;
+            height: 3px;
+            background-color: var(--accent-cyan);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 6rem 0;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg,
+                    var(--primary-dark) 0%,
+                    var(--secondary-dark) 100%);
+            color: var(--text-light);
+        }
+
+        .hero-bg-overlay {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff05" fill-opacity=".1"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0 20v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM6 46v-4h-2v4H0v2h4v4h2v-4h4v-2H6zm0-20v-4h-2v4H0v2h4v4h2v-4h4v-2H6zM36 0v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM6 10v-4h-2v4H0v2h4v4h2v-4h4v-2H6z" fill="%23ffffff05"/></g></g></svg>') repeat;
+            opacity: 0.2;
+            z-index: -1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .hero-title {
+            font-family: "Poppins", sans-serif;
+            /* Judul hero pakai Poppins */
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            /* Extra bold */
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+            text-shadow: 0 4px 15px var(--shadow-dark);
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-family: "Inter", sans-serif;
+            /* Subtitle pakai Inter */
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 14px 32px;
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius-large);
+            font-family: "Poppins", sans-serif;
+            /* Teks tombol pakai Poppins */
+            font-weight: 600;
+            /* Semi bold */
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 20px var(--shadow-subtle);
+            isolation: isolate;
+        }
+
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.1),
+                    transparent);
+            transition: left 0.6s ease;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px var(--shadow-dark);
+        }
+
+        .btn-demo {
+            background: linear-gradient(135deg,
+                    var(--accent-blue) 0%,
+                    var(--accent-cyan) 100%);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--accent-blue);
+            color: var(--accent-blue);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(0, 123, 255, 0.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 4rem 0;
+            background-color: var(--secondary-dark);
+            border-top: 1px solid var(--border-dark);
+            border-bottom: 1px solid var(--border-dark);
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-item {
+            padding: 1rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .stat-item.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-item:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+
+        .stat-item:nth-child(2) {
+            transition-delay: 0.2s;
+        }
+
+        .stat-item:nth-child(3) {
+            transition-delay: 0.3s;
+        }
+
+        .stat-item:nth-child(4) {
+            transition-delay: 0.4s;
+        }
+
+        .stat-number {
+            font-family: "Poppins", sans-serif;
+            /* Angka statistik pakai Poppins */
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            text-shadow: 0 2px 10px var(--shadow-subtle);
+        }
+
+        .stat-label {
+            font-family: "Inter", sans-serif;
+            /* Label statistik pakai Inter */
+            font-size: 1rem;
+            color: var(--text-light);
+            font-weight: 400;
+            margin-top: 0.5rem;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 6rem 0;
+            position: relative;
+            background-color: var(--primary-dark);
+        }
+
+        .section-title {
+            font-family: "Poppins", sans-serif;
+            /* Judul bagian pakai Poppins */
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+            text-shadow: 0 2px 10px var(--shadow-dark);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background-color: var(--secondary-dark);
+            border: 1px solid var(--border-dark);
+            padding: 2.5rem;
+            border-radius: var(--border-radius-base);
+            text-align: center;
+            box-shadow: 0 5px 20px var(--shadow-subtle);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .feature-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-card:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+
+        .feature-card:nth-child(2) {
+            transition-delay: 0.2s;
+        }
+
+        .feature-card:nth-child(3) {
+            transition-delay: 0.3s;
+        }
+
+        .feature-card:nth-child(4) {
+            transition-delay: 0.4s;
+        }
+
+        .feature-card:nth-child(5) {
+            transition-delay: 0.5s;
+        }
+
+        .feature-card:nth-child(6) {
+            transition-delay: 0.6s;
+        }
+
+        .feature-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg,
+                    var(--accent-blue),
+                    var(--accent-cyan));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+            transform-origin: left;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            color: var(--accent-cyan);
+        }
+
+        .feature-card h3 {
+            font-family: "Poppins", sans-serif;
+            /* Judul kartu fitur pakai Poppins */
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            font-family: "Inter", sans-serif;
+            /* Deskripsi kartu fitur pakai Inter */
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* Brands Section */
+        .brands-section {
+            padding: 6rem 0;
+            background-color: #000000;
+        }
+
+        .brands-container {
+            background-color: var(--primary-dark);
+            border: 1px solid var(--border-dark);
+            padding: 4rem 2rem;
+            border-radius: var(--border-radius-base);
+            text-align: center;
+            box-shadow: 0 5px 20px var(--shadow-subtle);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            transition-delay: 0.5s;
+        }
+
+        .brands-container.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .brands-subtitle {
+            font-family: "Inter", sans-serif;
+            /* Subtitle brand pakai Inter */
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .brand-card {
+            background-color: var(--secondary-dark);
+            border: 1px solid var(--border-dark);
+            padding: 2rem;
+            border-radius: var(--border-radius-base);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .brand-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            background-color: rgba(40, 48, 70, 0.8);
+            box-shadow: 0 8px 25px var(--shadow-dark);
+        }
+
+        .brand-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            background-color: #ffffff;
+            /* Latar belakang logo tetap putih agar kontras */
+        }
+
+        .brand-logo img {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .brand-card:hover .brand-logo img {
+            transform: scale(1.05);
+        }
+
+        .brand-name {
+            font-family: "Poppins", sans-serif;
+            /* Nama brand pakai Poppins */
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .brand-description {
+            font-family: "Inter", sans-serif;
+            /* Deskripsi brand pakai Inter */
+            color: var(--text-muted);
+            opacity: 0.8;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 6rem 0;
+            background-color: var(--primary-dark);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background-color: var(--secondary-dark);
+            border: 1px solid var(--border-dark);
+            border-radius: var(--border-radius-base);
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question {
+            font-family: "Poppins", sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-light);
+            position: relative;
+        }
+
+        .faq-question::after {
+            content: "+";
+            font-size: 2rem;
+            color: var(--accent-cyan);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .faq-answer p {
+            padding: 0 1.5rem 1.5rem;
+            font-family: "Inter", sans-serif;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            /* Adjust as needed */
+        }
+
+        /* Footer */
+        .main-footer {
+            background-color: #000000;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 6rem;
+        }
+
+        .footer-tagline {
+            font-family: "Inter", sans-serif;
+            /* Tagline footer pakai Inter */
+            margin-top: 0.5rem;
+            opacity: 0.7;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--primary-dark);
+            border: 1px solid var(--border-dark);
+            padding: 3rem;
+            border-radius: var(--border-radius-base);
+            box-shadow: 0 10px 40px var(--shadow-dark);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            animation: slideIn 0.4s ease forwards;
+            color: var(--text-light);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-title {
+            font-family: "Poppins", sans-serif;
+            /* Judul modal pakai Poppins */
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .modal-description {
+            font-family: "Inter", sans-serif;
+            /* Deskripsi modal pakai Inter */
+            color: var(--text-muted);
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .brand-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .brand-option {
+            background-color: var(--secondary-dark);
+            border: 2px solid var(--border-dark);
+            padding: 1.5rem;
+            border-radius: var(--border-radius-base);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .brand-option:hover {
+            border-color: var(--accent-blue);
+            background-color: rgba(40, 48, 70, 0.8);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px var(--shadow-dark);
+        }
+
+        .brand-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            z-index: 1;
+        }
+
+        .brand-option.selected {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 242, 254, 0.1);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 5px 20px rgba(0, 242, 254, 0.2);
+        }
+
+        .brand-option-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            background-color: #ffffff;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .brand-option.selected .brand-option-icon {
+            border: 2px solid var(--accent-cyan);
+            box-shadow: 0 0 0 4px rgba(0, 242, 254, 0.3);
+        }
+
+        .brand-option-icon img {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+        }
+
+        .brand-option-name {
+            font-family: "Poppins", sans-serif;
+            /* Nama opsi brand pakai Poppins */
+            color: var(--text-light);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn-cancel {
+            background-color: var(--secondary-dark);
+            border: 1px solid var(--border-dark);
+            color: var(--text-light);
+            box-shadow: none;
+        }
+
+        .btn-cancel:hover {
+            background-color: rgba(40, 48, 70, 0.8);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Perbaikan untuk tombol utama di dalam modal */
+        .modal-buttons .btn {
+            background-color: white;
+            color: var(--primary-dark);
+            /* Teks gelap di atas tombol terang */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-section {
+                padding: 4rem 0;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .modal-content {
+                padding: 2rem;
+            }
+        }
+
+        /* Animasi umum */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="gradient-background">
+    <header class="main-header">
+        <nav class="container main-nav">
+            <a href="#" class="logo">MikHuaPau</a>
+            <ul class="nav-links">
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#features">Fitur</a></li>
+                <li><a href="#brands">Brand</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#contact">Kontak</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section" id="home">
+            <div class="hero-bg-overlay"></div>
+            <div class="container hero-content">
+                <h1 class="hero-title">MIKHUAPAU</h1>
+                <p class="hero-subtitle">
+                    Solusi manajemen jaringan yang dirancang khusus untuk UMKM dan penyedia internet lokal (RT/RW Net).
+                    Pantau,
+                    kelola, dan amankan jaringan Anda dengan mudah dan efisien.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#features" class="btn btn-outline">
+                        <span>Pelajari Lebih Lanjut</span>
+                        <span>→</span>
+                    </a>
+                    <button class="btn btn-demo" onclick="openDemoModal()">
+                        <span>🚀</span>
+                        <span>Mulai Demo</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">98.5%</div>
+                        <div class="stat-label">Uptime</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3s</div>
+                        <div class="stat-label">Real-time Data</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Perangkat</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section" id="features">
+            <div class="container">
+                <h2 class="section-title">Fitur Unggulan</h2>
+
+                <div style="margin-bottom: 4rem">
+                    <h3 style="
+                font-family: 'Poppins', sans-serif;
+                font-size: 1.8rem;
+                font-weight: 600;
+                color: var(--accent-cyan);
+                text-align: center;
+                margin-bottom: 2rem;
+              ">
+                        🔧 Fitur MikhPau (MikroTik)
+                    </h3>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <span class="feature-icon">📊</span>
+                            <h3>Dashboard Intuitif</h3>
+                            <p>
+                                Lihat kesehatan jaringan MikroTik Anda secara keseluruhan dalam satu layar. Dirancang
+                                agar mudah dibaca,
+                                bahkan untuk pemula.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">📶</span>
+                            <h3>Manajemen Hotspot & Voucher</h3>
+                            <p>
+                                Kelola pengguna hotspot dan voucher dengan mudah. Atur paket, batasi kecepatan, dan
+                                pantau penggunaan
+                                secara real-time untuk bisnis Anda.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">🔗</span>
+                            <h3>Manajemen Pelanggan PPPoE</h3>
+                            <p>
+                                Pantau pelanggan PPPoE Anda, lihat sesi yang aktif, dan kelola paket layanan dengan
+                                beberapa klik saja.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">📈</span>
+                            <h3>Interface Traffic Monitor</h3>
+                            <p>
+                                Monitoring lalu lintas data pada setiap interface dengan
+                                grafik real-time dan historical data analytics.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">🛡️</span>
+                            <h3>Keamanan Jaringan Proaktif</h3>
+                            <p>
+                                Lindungi bisnis Anda dengan deteksi anomali dan serangan DDoS. Dapatkan peringatan dini
+                                sebelum layanan
+                                Anda terganggu.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">🎫</span>
+                            <h3>Report Voucher Usage</h3>
+                            <p>
+                                Laporan detail penggunaan voucher hotspot dengan analisis pola
+                                usage dan revenue tracking.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">👁️</span>
+                            <h3>System View</h3>
+                            <p>
+                                Tampilan sistem yang memberikan overview lengkap tentang
+                                status hardware, resources, dan performance MikroTik.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">💬</span>
+                            <h3>Chatbot Assistant</h3>
+                            <p>
+                                Asisten virtual yang membantu troubleshooting dan memberikan
+                                panduan konfigurasi MikroTik secara interaktif.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 4rem">
+                    <h3 style="
+                font-family: 'Poppins', sans-serif;
+                font-size: 1.8rem;
+                font-weight: 600;
+                color: var(--accent-blue);
+                text-align: center;
+                margin-bottom: 2rem;
+              ">
+                        🌐 Fitur HuaPau (Huawei)
+                    </h3>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <span class="feature-icon">📊</span>
+                            <h3>Dashboard Terpadu</h3>
+                            <p>
+                                Dashboard utama untuk monitoring dan controlling semua
+                                perangkat Huawei dalam infrastruktur jaringan Anda.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">🔌</span>
+                            <h3>Interfaces Manager</h3>
+                            <p>
+                                Pengelolaan interface jaringan Huawei dengan konfigurasi,
+                                monitoring status, dan troubleshooting terpusat.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">📡</span>
+                            <h3>Wireless Interfaces Manager</h3>
+                            <p>
+                                Manajemen khusus untuk interface wireless Huawei, termasuk AP
+                                management dan wireless security configuration.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">📈</span>
+                            <h3>Monitoring System & Traffic Data</h3>
+                            <p>
+                                Sistem monitoring komprehensif untuk tracking traffic data,
+                                performance metrics, dan network health.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">🔒</span>
+                            <h3>Security System</h3>
+                            <p>
+                                Sistem keamanan terintegrasi dengan firewall dan DDoS
+                                protection untuk melindungi infrastruktur jaringan.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">🗺️</span>
+                            <h3>Routing Manager</h3>
+                            <p>
+                                Pengelolaan routing protocol dan path optimization untuk
+                                memastikan network performance yang optimal.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">🔗</span>
+                            <h3>PPPoE Manager</h3>
+                            <p>
+                                Pengelolaan koneksi PPPoE pada perangkat Huawei dengan
+                                monitoring session dan bandwidth management.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">💬</span>
+                            <h3>Chatbot Assistant</h3>
+                            <p>
+                                Asisten virtual yang membantu troubleshooting dan memberikan
+                                panduan konfigurasi Huawei secara interaktif.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="
+                font-family: 'Poppins', sans-serif;
+                font-size: 1.8rem;
+                font-weight: 600;
+                color: var(--accent-cyan);
+                text-align: center;
+                margin-bottom: 2rem;
+              ">
+                        🤖 Fitur AI DDoS Detection
+                    </h3>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <span class="feature-icon">📋</span>
+                            <h3>Data Collection</h3>
+                            <p>
+                                Pengumpulan data traffic secara real-time untuk analisis
+                                pattern dan behavior network traffic.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">🧠</span>
+                            <h3>ML Training Dataset</h3>
+                            <p>
+                                Pelatihan model machine learning dengan dataset yang terus
+                                diperbarui untuk meningkatkan akurasi deteksi.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">🔍</span>
+                            <h3>Anomaly Traffic Detection</h3>
+                            <p>
+                                Deteksi otomatis traffic anomali dan potensi serangan DDoS
+                                menggunakan algoritma machine learning canggih.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">📱</span>
+                            <h3>Push Notification</h3>
+                            <p>
+                                Notifikasi push real-time ke aplikasi mobile saat terdeteksi
+                                ancaman atau anomali pada jaringan.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="brands-section" id="brands">
+            <div class="container">
+                <div class="brands-container">
+                    <h2 class="section-title">Brand Jaringan yang Didukung</h2>
+                    <p class="brands-subtitle">
+                        Kompatibel dengan perangkat jaringan terkemuka di industri
+                    </p>
+                    <div class="brands-grid">
+                        <div class="brand-card">
+                            <div class="brand-logo">
+                                <img src="img/huawei-logo.jpg" alt="Logo Huawei" />
+                            </div>
+                            <div class="brand-name">Huawei</div>
+                            <p class="brand-description">
+                                Solusi jaringan enterprise Huawei, termasuk router, switch,
+                                dan perangkat nirkabel.
+                            </p>
+                        </div>
+                        <div class="brand-card">
+                            <div class="brand-logo">
+                                <img src="img/mikrotik-logo.webp" alt="Logo MikroTik" />
+                            </div>
+                            <div class="brand-name">MikroTik</div>
+                            <p class="brand-description">
+                                RouterOS, RouterBoard, dan solusi nirkabel MikroTik
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section" id="faq">
+            <div class="container faq-container">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <div class="faq-item">
+                    <div class="faq-question">Apa itu MikHuaPau?</div>
+                    <div class="faq-answer">
+                        <p>
+                            MikHuaPau adalah alat bantu untuk bisnis RTRWNet Anda. Aplikasi ini memudahkan Anda memantau
+                            perangkat
+                            MikroTik (MikhPau) dan Huawei (HuaPau) secara real-time, serta melindungi jaringan dari
+                            serangan dengan
+                            teknologi AI.
+                        </p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Bagaimana cara terhubung dengan MikroTik (MikhPau)?
+                    </div>
+                    <div class="faq-answer">
+                        <p>
+                            Untuk menghubungkan aplikasi dengan perangkat MikroTik Anda,
+                            ikuti langkah-langkah berikut: <br />1. Masukkan IP Public dari
+                            perangkat MikroTik Anda. <br />2. Gunakan port API untuk
+                            koneksi. <br />3. Masukkan username dan password perangkat Anda.
+                            <br />4. Klik 'Connect' untuk memulai pemantauan.
+                        </p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Apakah Huawei (HuaPau) sudah bisa terhubung dengan perangkat
+                        Huawei??
+                    </div>
+                    <div class="faq-answer">
+                        <p>
+                            Saat ini, bagian HuaPau untuk perangkat Huawei masih dalam
+                            bentuk dummy (purwarupa) dan belum terhubung ke sistem live.
+                            Fitur ini sedang dalam pengembangan aktif dan akan segera
+                            tersedia.
+                        </p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Apa saja fitur utama dari deteksi DDoS berbasis AI?
+                    </div>
+                    <div class="faq-answer">
+                        <p>
+                            Fitur deteksi DDoS kami menggunakan Machine Learning untuk
+                            memberikan perlindungan proaktif. Prosesnya mencakup pengumpulan
+                            data traffic, pelatihan model ML dengan dataset terbaru, deteksi
+                            anomali secara otomatis, dan pengiriman notifikasi push ke
+                            perangkat Anda jika terdeteksi adanya ancaman.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>© 2025 CoreSight . All rights reserved. | Build v1.0.0-stable</p>
+        </div>
+    </footer>
+
+    <div id="demoModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Pilih Platform Demo</h3>
+            <p class="modal-description">
+                Silakan pilih platform jaringan yang ingin Anda coba untuk demo
+                pemantauan:
+            </p>
+
+            <div class="brand-selection">
+                <label class="brand-option" for="huawei">
+                    <input type="radio" id="huawei" name="brand" value="huawei" />
+                    <div class="brand-option-icon">
+                        <img src="img/huawei-logo.jpg" alt="Logo Huawei" />
+                    </div>
+                    <span class="brand-option-name">Huawei</span>
+                </label>
+                <label class="brand-option" for="mikrotik">
+                    <input type="radio" id="mikrotik" name="brand" value="mikrotik" />
+                    <div class="brand-option-icon">
+                        <img src="img/mikrotik-logo.webp" alt="Logo MikroTik" />
+                    </div>
+                    <span class="brand-option-name">MikroTik</span>
+                </label>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn btn-cancel" onclick="closeDemoModal()">
+                    Batal
+                </button>
+                <button class="btn" onclick="startDemo()">
+                    <span>Mulai Demo</span>
+                    <span>→</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    let selectedBrand = null;
+
+    function openDemoModal() {
+      document.getElementById("demoModal").style.display = "block";
+      document.body.style.overflow = "hidden"; // Nonaktifkan gulir latar belakang
+    }
+
+    function closeDemoModal() {
+      document.getElementById("demoModal").style.display = "none";
+      document.body.style.overflow = "auto"; // Aktifkan gulir latar belakang
+      selectedBrand = null;
+      // Reset selection
+      document.querySelectorAll(".brand-option").forEach((option) => {
+        const radioInput = option.querySelector('input[type="radio"]');
+        if (radioInput) {
+          radioInput.checked = false;
+        }
+        option.classList.remove("selected"); // Hapus kelas 'selected' yang ditambahkan JS
+      });
+    }
+
+    function startDemo() {
+      if (!selectedBrand) {
+        alert("Silakan pilih platform terlebih dahulu!");
+        return;
+      }
+
+      const btn = event.target.closest(".btn");
+      const originalContent = btn.innerHTML; // Simpan konten asli untuk dipulihkan nanti
+      btn.innerHTML = `
+        <span style="display:flex; align-items:center; gap:0.5rem;">
+            <svg class="loading-spinner" width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
+                <path d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" stroke-opacity="0.75"></path>
+            </svg>
+            Memuat...
+        </span>
+    `;
+      btn.disabled = true;
+      btn.style.opacity = "0.75";
+      btn.style.cursor = "not-allowed";
+
+      // Tambahkan animasi spinner ke CSS jika belum ada
+      const styleSheet = document.styleSheets[0];
+      if (!document.querySelector(".loading-spinner-keyframes")) {
+        const keyframesRule = `@keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }`;
+        styleSheet.insertRule(keyframesRule, styleSheet.cssRules.length);
+        const spinnerRule = `.loading-spinner { animation: spin 1s linear infinite; }`;
+        styleSheet.insertRule(spinnerRule, styleSheet.cssRules.length);
+        const dummyClass = document.createElement("style");
+        dummyClass.classList.add("loading-spinner-keyframes");
+        document.head.appendChild(dummyClass);
+      }
+
+      setTimeout(() => {
+        if (selectedBrand === "huawei") {
+          window.location.href = "https://localhost:3000/login"; //URL login Huawei
+        } else if (selectedBrand === "mikrotik") {
+          window.location.href =
+            "http://localhost/MikHuaPau/MikhPau/login.php"; //URL login MikroTik 
+        }
+        // Pulihkan status tombol jika tidak dialihkan
+        btn.innerHTML = originalContent;
+        btn.disabled = false;
+        btn.style.opacity = "";
+        btn.style.cursor = "";
+      }, 1500);
+    }
+
+    // Tangani pemilihan merek
+    document.querySelectorAll('input[name="brand"]').forEach((input) => {
+      input.addEventListener("change", function () {
+        selectedBrand = this.value;
+
+        // Perbarui pemilihan visual dengan CSS native
+        document.querySelectorAll(".brand-option").forEach((option) => {
+          option.classList.remove("selected"); // Hapus kelas 'selected' dari semua opsi
+        });
+        this.parentElement.classList.add("selected"); // Tambahkan kelas 'selected' ke opsi yang dipilih
+      });
+    });
+
+    // Tutup modal saat mengklik di luar
+    window.onclick = function (event) {
+      const modal = document.getElementById("demoModal");
+      if (event.target === modal) {
+        closeDemoModal();
+      }
+    };
+
+    // Pengguliran mulus untuk tautan navigasi
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute("href");
+        const target = document.querySelector(targetId);
+        if (target) {
+          const headerHeight =
+            document.querySelector(".main-header").offsetHeight;
+          window.scrollTo({
+            top: target.offsetTop - headerHeight,
+            behavior: "smooth",
+          });
+        }
+      });
+    });
+
+    // Efek gulir header
+    let lastScrollTop = 0;
+    const header = document.querySelector(".main-header");
+
+    window.addEventListener("scroll", function () {
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+
+      if (scrollTop > lastScrollTop && scrollTop > 100) {
+        header.classList.add("header-hidden");
+      } else {
+        header.classList.remove("header-hidden");
+      }
+
+      lastScrollTop = scrollTop;
+    });
+
+    // Accordion FAQ
+    document.querySelectorAll(".faq-question").forEach((item) => {
+      item.addEventListener("click", (event) => {
+        const faqItem = item.parentElement;
+        const currentlyActive = document.querySelector(".faq-item.active");
+
+        if (currentlyActive && currentlyActive !== faqItem) {
+          currentlyActive.classList.remove("active");
+        }
+
+        faqItem.classList.toggle("active");
+      });
+    });
+
+    // Intersection Observer untuk animasi masuk
+    const observerOptions = {
+      threshold: 0.1, // Elemen terlihat 10%
+      rootMargin: "0px 0px -50px 0px", // Mulai animasi sedikit sebelum sepenuhnya terlihat
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible"); // Tambahkan kelas untuk memicu transisi/animasi CSS
+          observer.unobserve(entry.target); // Animasi hanya sekali
+        }
+      });
+    }, observerOptions);
+
+    // Amati elemen-elemen yang akan dianimasikan saat digulir
+    document.querySelectorAll(".stat-item").forEach((el) => {
+      observer.observe(el);
+    });
+    document.querySelectorAll(".feature-card").forEach((el) => {
+      observer.observe(el);
+    });
+    document.querySelectorAll(".brands-container").forEach((el) => {
+      observer.observe(el);
+    });
+    </script>
+</body>
+
+</html>
